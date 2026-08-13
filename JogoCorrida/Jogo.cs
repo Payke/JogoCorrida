@@ -20,7 +20,36 @@
 
 
         // MÉTODOS
+        public void IniciarJogo()
+        {
+            Carro = new Elemento();
+            Carro.Tipo = TipoElemento.Carro;
+            Carro.PosicaoX = PosicionaObjeto(1);
+            Carro.PosicaoY = YMax - 10;
 
+            Obstaculos = FabricaObstaculos(3, 10, 50);
+        }
+
+        public List<Elemento> FabricaObstaculos(int qtd, int dmin, int dmax)
+        {
+            var y_inicial = -100;
+            var rnd = new Random();
+            var obstaculos = new List<Elemento>();
+
+            for (int i = 0; i < qtd; i++)
+            {
+                if (i != 0)
+                    y_inicial -= rnd.Next(dmin, dmax);
+                    var ob = new Elemento();
+                    ob.Tipo = TipoElemento.Obstaculo;
+                    var faixa = rnd.Next(1, 2);
+                    ob.PosicaoX = PosicionaObjeto(faixa);
+                    ob.PosicaoY = y_inicial;
+                
+            }
+
+            return obstaculos;
+        }
 
         public int PosicionaObjeto(int faixa)
         {
@@ -32,35 +61,6 @@
             {
                 return Faixa2Inicio + (Faixa2Fim - Faixa2Inicio) / 2;
             }
-        }
-
-        public List<Elemento> FabricaObstaculos(int qtd, int dmin, int dmax)
-        {
-            var y_inicial = -100;
-            var rnd = new Random();
-            var obstaculos = new List<Elemento>();
-
-            for (int i = 0; i < qtd; i++)
-            {
-                if( i != 0) {
-                }
-                var ab = new Elemento();
-                ab.Tipo = TipoElemento.Obstaculo;
-                var faixa = rnd.Next(1, 2);
-                ab.PosicaoX = PosicionaObjeto(faixa);
-                ab.PosicaoY = y_inicial;
-            }
-
-            return obstaculos;
-        }
-
-        public void IniciarJogo(){
-            Carro = new Elemento();
-            Carro.Tipo = TipoElemento.Carro;
-            Carro.PosicaoX = PosicionaObjeto(1);
-            Carro.PosicaoY = YMax - 10;
-
-            Obstaculos = FabricaObstaculos(3, 10, 50);
         }
 
   
