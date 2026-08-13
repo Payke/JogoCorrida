@@ -25,14 +25,14 @@
             Carro = new Elemento();
             Carro.Tipo = TipoElemento.Carro;
             Carro.PosicaoX = PosicionaObjeto(1);
-            Carro.PosicaoY = YMax - 10;
+            Carro.PosicaoY = YMax - 1;
 
-            Obstaculos = FabricaObstaculos(3, 10, 50);
+            Obstaculos = FabricaObstaculos(3, 2, 5);
         }
 
         public List<Elemento> FabricaObstaculos(int qtd, int dmin, int dmax)
         {
-            var y_inicial = -100;
+            var y_inicial = 0;
             var rnd = new Random();
             var obstaculos = new List<Elemento>();
 
@@ -40,12 +40,15 @@
             {
                 if (i != 0)
                     y_inicial -= rnd.Next(dmin, dmax);
-                    var ob = new Elemento();
-                    ob.Tipo = TipoElemento.Obstaculo;
-                    var faixa = rnd.Next(1, 2);
-                    ob.PosicaoX = PosicionaObjeto(faixa);
-                    ob.PosicaoY = y_inicial;
-                
+                var ob = new Elemento
+                {
+                    Tipo = TipoElemento.Obstaculo
+                };
+
+                var faixa = rnd.Next(1, 3);
+                ob.PosicaoX = PosicionaObjeto(faixa);
+                ob.PosicaoY = y_inicial;
+                obstaculos.Add(ob);
             }
 
             return obstaculos;
@@ -79,9 +82,10 @@
         }
         public bool ChecarColisao()
         {
-            foreach (var ab in Obstaculos)
-                if (ChecaFaixaElemento(Carro) == ChecaFaixaElemento(ab)){
-                    if(Math.Abs(Carro.PosicaoY-ab.PosicaoY) >= 10){
+            foreach (var ob in Obstaculos)
+            {
+                if (ChecaFaixaElemento(Carro) == ChecaFaixaElemento(ob)){
+                    if(Math.Abs(Carro.PosicaoY - ob.PosicaoY) == 0)
                         return true;
                     }
                 }
@@ -91,6 +95,18 @@
         public bool VerificarFimJogo()
         {
             return true;
+        }
+
+        public void MovimentaObstaculos()
+        {
+            foreach(var ob in Obstaculos)
+            {
+                ob.PosicaoY++;
+                if(ob.PosicaoY > YMax)
+                {
+                    ob.PosicaoY = 0;
+                }
+            }
         }
     }
 }
