@@ -4,7 +4,7 @@ class Progran
     static void Main()
     {
         Jogo jogo = new Jogo {
-
+        
             Faixa1Inicio = 1,
             Faixa1Fim = 11,
             Faixa2Inicio = 13,
@@ -18,7 +18,7 @@ class Progran
 
         jogo.Carro.PosicaoX = jogo.PosicionaObjeto(1);
         jogo.Carro.PosicaoY = 10;
-   
+            
         for (; ; ) {
 
             DesenharCenario();
@@ -30,7 +30,10 @@ class Progran
                 {
                     DesenharElemento(ob.PosicaoY, ob.PosicaoX, '0');
                 }
-            }
+                else if (tecla.Key == ConsoleKey.RightArrow)
+                {
+                    posicao = "Rigth";
+                }
 
             if ((DateTime.Now - tempoUltimaMovimentacao).Milliseconds >= jogo.Velociade) {
 
@@ -43,26 +46,28 @@ class Progran
                 var tecla = Console.ReadKey();
                 if (tecla.Key == ConsoleKey.LeftArrow)
 
-                {
+            if (posicao == "Left")
+            {
                     jogo.Carro.PosicaoX = jogo.PosicionaObjeto(1);
 
                 } else if (tecla.Key == ConsoleKey.RightArrow) {
 
                     jogo.Carro.PosicaoX = jogo.PosicionaObjeto(2);
 
-                }
+            }
 
                 if (jogo.ChecarColisao())
-                {
+            {
                     GamerOver();
                     TocarSom();
                     break;
                 }
                 Thread.Sleep(200);
             }
+
         }
     }
-    
+
 
     public static void DesenharElemento(int linha, int coluna, char simbolo)
     {
